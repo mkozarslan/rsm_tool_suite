@@ -1,9 +1,14 @@
 import math
 import os
 import numpy as np
-import imp
+# import imp
 import glob
-lhsu = imp.load_source("lhsu", "./LHS/lhsu.py")
+import importlib.util
+
+spec = importlib.util.spec_from_file_location("lhsu", "./LHS/lhsu.py")
+lhsu = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(lhsu)
+
 
 '''Push button generation of a RSM for the CD of a satellite'''
 
@@ -172,12 +177,12 @@ def lhs_ensemble(tpmdir, xmin, xmax, NENS, GSI_MODEL):
 def run_tpmc(NPROCS, speciesnames, ispec, rtype, outdir):
 
     #RUN THE CODE
-    print "Starting simulation for "+speciesnames[ispec]+" "+rtype+" set\n"
+    print("Starting simulation for "+speciesnames[ispec]+" "+rtype+" set\n")
     cmd = "mpiexec -n "+str(NPROCS)+" ./tpm"
     os.system(cmd)
 
     #COPY THE OUTPUT TO A NEW FILE
-    print "Copying output data\n"
+    print("Copying output data\n")
     outname = "CYGNSS_"+speciesnames[ispec]+"_"+rtype+"_set.dat"
     outpath = os.path.join(outdir, outname)
     cmd = 'cp Cdout.dat "'+outpath+'"'
@@ -272,8 +277,8 @@ if __name__ == '__main__':
     gpmsadir = os.path.join(mcmcdir, "gpmsa/matlab")
     
     ####################### INPUTS ##########################
-    NENS = 1000             #NUMBER OF ENSEMBLE MEMBERS
-    NPROCS = 20             #NUMBER OF PROCESSORS FOR SIMULATION
+    NENS = 20             #NUMBER OF ENSEMBLE MEMBERS
+    NPROCS = 4             #NUMBER OF PROCESSORS FOR SIMULATION
     RSMNAME = "CYGNSS"      #NAME OF OUTPUT RSM FILE
 
     ##################### START CODE ########################
