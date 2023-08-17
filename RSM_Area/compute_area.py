@@ -98,7 +98,7 @@ if __name__ == '__main__':
 
     MESHNAME = "CYGNSS_final_ascii.stl"   #MESH FILENAME
     SATNAME = "CYGNSS"                    #SATELLITE NAME
-    NPROCS = 30                           #NUMBER OF PROCESSORS
+    NPROCS = 4                           #NUMBER OF PROCESSORS
 
     dphi = 0.1                            #PITCH ANGLE RESOLUTION (IN DEGREES)
     dtheta = 0.1                          #YAW ANGLE RESOLUTION (IN DEGREES)
