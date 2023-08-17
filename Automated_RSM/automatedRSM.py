@@ -277,7 +277,7 @@ if __name__ == '__main__':
     gpmsadir = os.path.join(mcmcdir, "gpmsa/matlab")
     
     ####################### INPUTS ##########################
-    NENS = 20             #NUMBER OF ENSEMBLE MEMBERS
+    NENS = 100             #NUMBER OF ENSEMBLE MEMBERS
     NPROCS = 4             #NUMBER OF PROCESSORS FOR SIMULATION
     RSMNAME = "CYGNSS"      #NAME OF OUTPUT RSM FILE
 
