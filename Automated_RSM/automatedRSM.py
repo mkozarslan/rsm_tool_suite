@@ -178,12 +178,12 @@ def run_tpmc(NPROCS, speciesnames, ispec, rtype, outdir):
 
     #RUN THE CODE
     print("Starting simulation for "+speciesnames[ispec]+" "+rtype+" set\n")
-    cmd = "mpiexec -n "+str(NPROCS)+" ./tpm"
+    cmd = "mpiexec --use-hwthread-cpus -n "+str(NPROCS)+" ./tpm" 
     os.system(cmd)
 
     #COPY THE OUTPUT TO A NEW FILE
     print("Copying output data\n")
-    outname = "CYGNSS_"+speciesnames[ispec]+"_"+rtype+"_set.dat"
+    outname = f"{RSMNAME}_"+speciesnames[ispec]+"_"+rtype+"_set.dat"
     outpath = os.path.join(outdir, outname)
     cmd = 'cp Cdout.dat "'+outpath+'"'
     os.system(cmd)
@@ -217,10 +217,10 @@ def tpmc_loop(NPROCS, NENS, mcmcdir, tpmdir):
                     os.makedirs(outdir)
 
             #Define Species Array
-            for i in range(NSPECIES):
-                species[i] = 0.0
-                if i == ispec:
-                    species[i] = 1.0
+            # Set species values
+            species_values = [0.871743, 0.002771, 0.007930, 0.104092, 0.013129, 0.000335]
+            species = np.array(species_values)
+
       
             #Read input
             xmin, xmax, GSI_MODEL = modify_input(NENS, tpmdir, species, D2R)
@@ -278,7 +278,7 @@ if __name__ == '__main__':
     
     ####################### INPUTS ##########################
     NENS = 100             #NUMBER OF ENSEMBLE MEMBERS
-    NPROCS = 4             #NUMBER OF PROCESSORS FOR SIMULATION
+    NPROCS = 8             #NUMBER OF PROCESSORS FOR SIMULATION
     RSMNAME = "CYGNSS"      #NAME OF OUTPUT RSM FILE
 
     ##################### START CODE ########################

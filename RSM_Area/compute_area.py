@@ -66,7 +66,7 @@ def write_ensemble(areadir, phi_min, phi_max, theta_min, theta_max, Nphi, Ntheta
 ########################### RUN AREA CODE #######################
 def run_area_code(areadir, NPROCS):
     os.chdir(areadir)
-    cmd = "mpiexec -n {0} ./area".format(NPROCS)
+    cmd = "mpiexec --use-hwthread-cpus -n {0} ./area".format(NPROCS)
     os.system(cmd)
 
 
@@ -98,7 +98,7 @@ if __name__ == '__main__':
 
     MESHNAME = "CYGNSS_final_ascii.stl"   #MESH FILENAME
     SATNAME = "CYGNSS"                    #SATELLITE NAME
-    NPROCS = 4                           #NUMBER OF PROCESSORS
+    NPROCS = 8                           #NUMBER OF PROCESSORS
 
     dphi = 0.1                            #PITCH ANGLE RESOLUTION (IN DEGREES)
     dtheta = 0.1                          #YAW ANGLE RESOLUTION (IN DEGREES)
